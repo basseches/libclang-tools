@@ -70,11 +70,10 @@ def find():
   funcs = find_func(tu, fn_name)
 
   if len(funcs) == 0:
-    cprint(f"No definition found for {fn_name}().", "red")
+    # Function definition wasn't found.
     exit(1)
 
   for f in funcs:
-    cprint(f"Definition of {fn_name}() found:", "green")
     print_body(filepath, f.extent)
 
 if __name__ == '__main__':
