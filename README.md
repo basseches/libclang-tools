@@ -1,8 +1,11 @@
 # libclang-tools
 
+Use the [`libclang`](https://libclang.readthedocs.io/en/latest/index.html) module to
+query the Clang AST for a `.c` file.
+
 ## find.py
 
-Query the Clang AST of a `.c` file to find a function's definition and print it out.
+Finds a function's definition and prints it out.
 
 ```
 usage: find.py [-h] <filepath> <function>
