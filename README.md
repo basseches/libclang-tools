@@ -3,6 +3,18 @@
 Use the [`libclang`](https://libclang.readthedocs.io/en/latest/index.html) module to
 query the Clang AST for a `.c` file.
 
+## Dependencies
+
+`libclang` is part of the
+[`LLVM project.`](https://github.com/llvm/llvm-project/tree/main/clang/bindings/python)
+Unfortunately, there's no good way to install Clang's Python bindings as there's no official
+`libclang` package. The solution for now is to
+
+```
+pip install libclang
+```
+This package is an unofficial mirror.
+
 ## find.py
 
 Finds a function's definition and prints it out.
