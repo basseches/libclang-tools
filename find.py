@@ -1,12 +1,10 @@
-#!/bin/python3
+#!/usr/bin/env python3
 
 import argparse
 import os
 import sys
 
 import clang.cindex
-
-from termcolor import cprint
 
 def find_func(tu, name):
   """ Retrieve lists of function declarations and call expressions in a
