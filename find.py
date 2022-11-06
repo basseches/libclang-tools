@@ -19,7 +19,6 @@ def find_func(tu, name):
   """ Retrieve lists of function declarations and call expressions in a
   translation unit.
   """
-  filename = tu.cursor.spelling
   funcs = []
   for c in tu.cursor.walk_preorder():
     if c.location.file is None:
