@@ -8,13 +8,6 @@ import clang.cindex
 
 from termcolor import cprint
 
-def is_function_call(funcdecl, c):
-  """ Determine where a call-expression cursor refers to a particular
-  function declaration.
-  """
-  defn = c.get_definition()
-  return (defn is not None) and (defn == funcdecl)
-
 def find_func(tu, name):
   """ Retrieve lists of function declarations and call expressions in a
   translation unit.
