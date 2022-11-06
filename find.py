@@ -35,9 +35,8 @@ def print_body(filename, extent):
   with open(filename, 'r') as file:
     lines = file.readlines()
   
-  # This is a little finnicky, unfortunately. If the function signature is more
-  # than one line long, it will print some of the signature, too, for example.
   for line in lines[extent.start.line - 1: extent.end.line]:
+    # Lines end with \n already
     print(line, end="")
 
 def find():
