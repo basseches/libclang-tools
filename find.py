@@ -14,7 +14,8 @@ def find_func(tu, name):
   for c in tu.cursor.walk_preorder():
     if c.location.file is None:
       continue
-    if (c.kind == clang.cindex.CursorKind.FUNCTION_DECL) and (c.spelling == name):
+    is_func_decl = c.kind == clang.cindex.CursorKind.FUNCTION_DECL
+    if is_func_decl and (c.spelling == name) and (c.is_definition()):
       funcs.append(c)
   return funcs
 
