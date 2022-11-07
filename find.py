@@ -25,7 +25,7 @@ def print_body(filename, extent):
   """
   with open(filename, 'r') as file:
     lines = file.readlines()
-  
+
   for line in lines[extent.start.line - 1: extent.end.line]:
     # Lines end with \n already
     print(line, end="")
@@ -39,17 +39,17 @@ def find():
                       metavar='<filepath>',
                       type=str,
                       help='the path of the .c file')
-  
+
   parser.add_argument('function',
                       metavar='<function>',
                       type=str,
                       help='the name of the function to extract')
-  
+
   args = parser.parse_args()
   filepath = args.filepath
   if not os.path.isfile(filepath):
     print('The file specified does not exist')
-    sys.exit()
+    sys.exit(1)
 
   fn_name = args.function
 
@@ -63,7 +63,7 @@ def find():
 
   if len(funcs) == 0:
     # Function definition wasn't found.
-    exit(1)
+    sys.exit(1)
 
   for f in funcs:
     print_body(filepath, f.extent)
