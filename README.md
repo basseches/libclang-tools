@@ -68,6 +68,7 @@ options:
 
 Executing the following will replace all calls to `foo()` in `file.c` with
 calls to `bar()`, but the arguments to the function call will be retained.
+The result is written to `stdout`.
 
 ```
 ./replace.py file.c foo bar
