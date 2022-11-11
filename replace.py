@@ -48,6 +48,19 @@ def replace_call(token_gen, filename, fn_name, fn_args, offset):
   # Update the offset value
   return end_offset
 
+def replace_calls(calls, filename, fn_name, fn_args):
+  """Replaces all calls to a function."""
+  curr_offset = 0
+  for call in calls:
+    # Replace calls, writing parts of the file to stdout along the way.
+    curr_offset = replace_call(call.get_tokens(), filename, fn_name, fn_args,
+                               curr_offset)
+
+  # Write out the rest of the file
+  with open(filename, "r") as c_file:
+    c_file.seek(curr_offset)
+    sys.stdout.write(c_file.read())
+
 class ParseFnArgs(argparse.Action):
   def __call__(self, parser, namespace, args, option_string=None):
     delim = ", "
@@ -85,32 +98,21 @@ def replace():
     print('The file specified does not exist')
     sys.exit(1)
 
-  fn_args = args.args
-  old_fn = args.oldfn
-  new_fn = args.newfn
-
   idx = clang.cindex.Index.create()
 
   # Generate translation unit
   tu = idx.parse(filename)
 
   # Return cursor that points to the function call
-  calls = find_func(tu, old_fn)
+  calls = find_func(tu, args.oldfn)
 
   if len(calls) == 0:
     # Function call wasn't found
     sys.exit(1)
 
-  curr_offset = 0
-  for call in calls:
-    # Replace calls, writing parts of the file to stdout along the way.
-    curr_offset = replace_call(call.get_tokens(), filename, new_fn, fn_args,
-                               curr_offset)
-  
-  # Write out the rest of the file
-  with open(filename, "r") as c_file:
-    c_file.seek(curr_offset)
-    sys.stdout.write(c_file.read())
+  new_fn = args.newfn
+  fn_args = args.args
+  replace_calls(calls, filename, args.newfn, args.args)
 
 if __name__ == '__main__':
   replace()
