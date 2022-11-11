@@ -23,14 +23,13 @@ def print_body(filename, extent):
   """ Print the function body associated with a function decl cursor extent
   (start and end location).
   """
+  start = extent.start.offset
+  body = extent.end.offset - start
   with open(filename, 'r') as file:
-    lines = file.readlines()
+    file.seek(start)
+    print(file.read(body))
 
-  for line in lines[extent.start.line - 1: extent.end.line]:
-    # Lines end with \n already
-    print(line, end="")
-
-def find():
+def printdef():
   parser = argparse.ArgumentParser(
     description='Find and print the definition of a function.'
   )
@@ -55,18 +54,18 @@ def find():
 
   idx = clang.cindex.Index.create()
 
-  # translation unit
+  # Translation unit
   tu = idx.parse(filepath)
 
   # Returns cursor that points to the definition of the function
   funcs = find_func(tu, fn_name)
 
   if len(funcs) == 0:
-    # Function definition wasn't found.
+    # Function definition wasn't found
     sys.exit(1)
 
   for f in funcs:
     print_body(filepath, f.extent)
 
 if __name__ == '__main__':
-  find()
+  printdef()

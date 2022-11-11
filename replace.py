@@ -91,14 +91,14 @@ def replace():
 
   idx = clang.cindex.Index.create()
 
-  # translation unit
+  # Generate translation unit
   tu = idx.parse(filename)
 
-  # Returns cursor that points to the function call
+  # Return cursor that points to the function call
   calls = find_func(tu, old_fn)
 
   if len(calls) == 0:
-    # Function call wasn't found.
+    # Function call wasn't found
     sys.exit(1)
 
   curr_offset = 0
