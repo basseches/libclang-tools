@@ -50,9 +50,8 @@ def replace_call(token_gen, filename, fn_name, fn_args, offset):
 
 class ParseFnArgs(argparse.Action):
   def __call__(self, parser, namespace, args, option_string=None):
-    comma = ", "
-    comma.join(args)
-    setattr(namespace, self.dest, comma.join(args))
+    delim = ", "
+    setattr(namespace, self.dest, delim.join(args))
 
 def replace():
   parser = argparse.ArgumentParser(
