@@ -6,7 +6,7 @@ query the Clang AST for a `.c` file.
 ## Dependencies
 
 `libclang` is part of the
-[`LLVM project.`](https://github.com/llvm/llvm-project/tree/main/clang/bindings/python)
+[LLVM project.](https://github.com/llvm/llvm-project/tree/main/clang/bindings/python)
 Unfortunately, there's no good way to install Clang's Python bindings as there's no official
 `libclang` package. The solution for now is to
 
