@@ -26,13 +26,14 @@ def replace_call(o_file, call, content, fn_name, fn_args, offset):
   for token in call.get_tokens():
     tokens.append(token)
 
-  # Extract args.
+  # Extract args
   old_args = []
   for arg_cursor in call.get_arguments():
     start = arg_cursor.extent.start.offset
     end = arg_cursor.extent.end.offset
     old_args.append(content[start:end])
 
+  # Replace [NUMBER] with old function arg
   for idx, arg in enumerate(old_args):
     fn_args = re.sub(f"\[{re.escape(str(idx))}\]", arg, fn_args)
 
@@ -73,15 +74,15 @@ def replace_calls(o_file, calls, filename, fn_name, fn_args):
   with open(filename, "r") as c_file:
     content = c_file.read()
 
-  # Want to overwrite the output file
+  # Overwrite the output file
   if o_file:
     open(o_file, "w").close()
 
   curr_offset = 0
   for call in calls:
     # Replace calls, writing parts of the file to stdout along the way.
-    curr_offset = replace_call(o_file, call, content, fn_name,
-                               fn_args, curr_offset)
+    curr_offset = replace_call(o_file, call, content, fn_name, fn_args,
+                               curr_offset)
 
   # Write out the rest of the file
   if o_file:
@@ -115,7 +116,6 @@ def replace():
                       type=str,
                       help='the new function\'s name')
 
-  # Can pass arguments as $number for old args
   parser.add_argument('-a',
                       '--args',
                       nargs='*',
@@ -124,6 +124,7 @@ def replace():
                       ' old function\'s args with [number])')
 
   parser.add_argument('-i',
+                      '--inplace',
                       action="store_true",
                       help='in place edit, if specified')
 
@@ -153,7 +154,7 @@ def replace():
 
   new_fn = args.newfn
   fn_args = args.args
-  o_file = filename if args.i else args.outputfile
+  o_file = filename if args.inplace else args.outputfile
   replace_calls(o_file, calls, filename, args.newfn, args.args)
 
 if __name__ == '__main__':
