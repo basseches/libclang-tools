@@ -49,7 +49,7 @@ function. Optionally replaces the arguments with arguments passed on the command
 line.
 
 ```
-usage: replace.py [-h] [-a [ARGS ...]] <filepath> <oldfn> <newfn>
+usage: replace.py [-h] [-a [ARGS ...]] [-i] [-o OUTPUTFILE] <filepath> <oldfn> <newfn>
 
 Find and replace function calls. Writes result to stdout.
 
@@ -61,7 +61,11 @@ positional arguments:
 options:
   -h, --help            show this help message and exit
   -a [ARGS ...], --args [ARGS ...]
-                        new args to be passed to the function
+                        new args to be passed to the function (refer to old function's args
+                        with [number])
+  -i, --inplace         in place edit, if specified
+  -o OUTPUTFILE, --outputfile OUTPUTFILE
+                        the name of an output file, if specified
 ```
 
 ### Example usage
@@ -75,10 +79,17 @@ The result is written to `stdout`.
 ```
 
 Executing the following will replace all calls to `foo(...)` in `file.c` with
-calls to `bar(arg1, arg2, arg3)`.
+calls to `bar(1, 2, 3)` in-place.
 
 ```
-./replace.py file.c foo bar -a arg1 arg2 arg3
+./replace.py -i file.c foo bar -a 1 2 3
+```
+
+Executing the following will replace all calls to `foo(arg0, arg1)` with calls
+to `bar((arg0) * (arg1))` in-place.
+
+```
+./replace.py -i file.c foo bar -a "([0]) * ([1])"
 ```
 
 ---
