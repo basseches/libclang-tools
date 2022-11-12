@@ -26,16 +26,17 @@ def replace_call(o_file, call, content, fn_name, fn_args, offset):
   for token in call.get_tokens():
     tokens.append(token)
 
-  # Extract args
-  old_args = []
-  for arg_cursor in call.get_arguments():
-    start = arg_cursor.extent.start.offset
-    end = arg_cursor.extent.end.offset
-    old_args.append(content[start:end])
+  if fn_args:
+    # Extract old args
+    old_args = []
+    for arg_cursor in call.get_arguments():
+      start = arg_cursor.extent.start.offset
+      end = arg_cursor.extent.end.offset
+      old_args.append(content[start:end])
 
-  # Replace [NUMBER] with old function arg
-  for idx, arg in enumerate(old_args):
-    fn_args = re.sub(f"\[{re.escape(str(idx))}\]", arg, fn_args)
+    # Replace [NUMBER] with old function arg
+    for idx, arg in enumerate(old_args):
+      fn_args = re.sub(f"\[{re.escape(str(idx))}\]", arg, fn_args)
 
   # The first token is always the function ID (i.e. name).
   old_id = tokens[0]
