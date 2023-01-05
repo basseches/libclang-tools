@@ -22,7 +22,7 @@ def find_func(tu, name):
 
 
 def replace_call(o_file, call, content, fn_name, fn_args, offset):
-    """ Replaces call to old function with call to a new function. Optionally
+    """Replaces call to old function with call to a new function. Optionally
     replaces the old function args with args passed in as CLA.
     """
     if debug:

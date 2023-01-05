@@ -18,13 +18,13 @@ def is_valid_function(call, tu):
     (sum(1 for _ in call.get_children()) < arr_len)
 
 def find(tu):
-    """ Retrieve list of stack-based braced array list-initializations (if they
+    """Retrieve list of stack-based braced array list-initializations (if they
     do some kind of zeroing out of the structure)."""
     return [ c.semantic_parent for c in tu.cursor.walk_preorder() \
              if is_valid_function(c, tu) ]
 
 def remove_init(o_file, edited, arr, content, offset):
-    """ Removes a braced array list-intialization.
+    """Removes a braced array list-intialization.
     """
     cprint(f"[ Zero-initialization detected on line {arr.extent.start.line} of "
     f"{arr.location.file} ]", "blue")
