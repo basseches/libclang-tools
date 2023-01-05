@@ -15,33 +15,6 @@ pip install libclang
 ```
 This package is an unofficial mirror.
 
-## `printdef.py`
-
-*Like `printf()`, but not really like `printf()` at all.*
-
-Finds a function's definition and prints it out.
-
-```
-usage: printdef.py [-h] <filepath> <function>
-
-Find and print the definition of a function.
-
-positional arguments:
-  <filepath>  the path of the .c file
-  <function>  the name of the function to extract
-
-options:
-  -h, --help  show this help message and exit
-```
-
-### Example usage
-
-The following will print out the definition of `foo()` if it exists in `file.c`.
-
-```
-./printdef.py file.c foo
-```
-
 ## `replace.py`
 
 Finds all calls to a certain function and replaces them with calls to another
@@ -98,4 +71,50 @@ For nice syntax highlighting, pipe into `batcat`:
 
 ```.sh
 ./find.py example.c foo | batcat -l=c
+```
+
+## `printdef.py`
+
+*Like `printf()`, but not really like `printf()` at all.*
+
+Finds a function's definition and prints it out.
+
+```
+usage: printdef.py [-h] <filepath> <function>
+
+Find and print the definition of a function.
+
+positional arguments:
+  <filepath>  the path of the .c file
+  <function>  the name of the function to extract
+
+options:
+  -h, --help  show this help message and exit
+```
+
+### Example usage
+
+The following will print out the definition of `foo()` if it exists in `file.c`.
+
+```
+./printdef.py file.c foo
+```
+
+## `orthodontist.py`
+
+Remove braced zero-initialization of arrays.
+
+```
+usage: orthodontist.py [-h] [-i] [-o OUTPUTFILE] <filepath>
+
+Remove braced zero initialization of arrays. Writes result to stdout by default.
+
+positional arguments:
+  <filepath>            the path of the .c file
+
+options:
+  -h, --help            show this help message and exit
+  -i, --inplace         in place edit, if specified
+  -o OUTPUTFILE, --outputfile OUTPUTFILE
+                        the name of an output file, if specified
 ```
