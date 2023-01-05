@@ -12,9 +12,7 @@ def is_valid_function(call, tu, name):
     if call.location.file is None or call.location.file.name != tu.spelling:
         return False
     is_func_call = call.kind == clang.cindex.CursorKind.CALL_EXPR
-    if is_func_call and (call.spelling == name):
-        return True
-    return False
+    return is_func_call and (call.spelling == name)
 
 def find_func(tu, name):
     """Retrieve lists of function declarations and call expressions in a
@@ -172,7 +170,6 @@ def replace():
 
     if len(calls) == 0:
         # Function call wasn't found
-        cprint('The function specified was not found.', 'red')
         sys.exit(0)
 
     if args.create_file:

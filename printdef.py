@@ -10,9 +10,7 @@ def is_valid_function(call, name):
     if call.location.file is None:
         return False
     is_func_decl = call.kind == clang.cindex.CursorKind.FUNCTION_DECL
-    if is_func_decl and (call.spelling == name) and (call.is_definition()):
-        return True
-    return False
+    return is_func_decl and (call.spelling == name) and (call.is_definition())
 
 def find_func(tu, name):
     """Retrieve lists of function declarations and call expressions in a
